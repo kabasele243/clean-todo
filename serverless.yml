@@ -1,0 +1,97 @@
+service: serverless-todo-api
+
+plugins:
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    exclude: ['aws-sdk']
+    target: 'node20'
+    platform: 'node'
+    concurrency: 10
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: dev
+  region: us-east-1
+  environment:
+    TODOS_TABLE: ${self:service}-${sls:stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:provider.environment.TODOS_TABLE}
+
+functions:
+  createTodo:
+    handler: src/interfaces/handlers/todoHandler.createTodo
+    events:
+      - http:
+          path: /todos
+          method: post
+          cors: true
+
+  getTodo:
+    handler: src/interfaces/handlers/todoHandler.getTodo
+    events:
+      - http:
+          path: /todos/{id}
+          method: get
+          cors: true
+
+  listTodos:
+    handler: src/interfaces/handlers/todoHandler.listTodos
+    events:
+      - http:
+          path: /todos
+          method: get
+          cors: true
+
+  updateTodo:
+    handler: src/interfaces/handlers/todoHandler.updateTodo
+    events:
+      - http:
+          path: /todos/{id}
+          method: put
+          cors: true
+
+  completeTodo:
+    handler: src/interfaces/handlers/todoHandler.completeTodo
+    events:
+      - http:
+          path: /todos/{id}/complete
+          method: put
+          cors: true
+
+  deleteTodo:
+    handler: src/interfaces/handlers/todoHandler.deleteTodo
+    events:
+      - http:
+          path: /todos/{id}
+          method: delete
+          cors: true
+
+resources:
+  Resources:
+    TodosTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.TODOS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
