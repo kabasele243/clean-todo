@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { DynamoDBTodoRepository } from '../../../.build/src/infrastructure/repositories/DynamoDBRepository';
+import { DynamoDBTodoRepository } from './DynamoDBRepository';
 import { DynamoDBDocumentClient, PutCommand, GetCommand, ScanCommand, UpdateCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 import { Todo } from '../../domain/entities/Todo';
 
