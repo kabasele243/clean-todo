@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi , { ValidationError } from 'joi';
 import createHttpError from 'http-errors';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import middy from '@middy/core';
@@ -33,7 +33,7 @@ export const validateSchema = (schema: Joi.Schema) => {
       } catch (error) {
         throw createHttpError(400, {
           message: 'Validation failed',
-          details: (error as any).details
+          details: (error as ValidationError).details
         });
       }
     }
