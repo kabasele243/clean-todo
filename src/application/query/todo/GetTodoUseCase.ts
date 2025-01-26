@@ -1,5 +1,5 @@
-import { Todo } from "../../domain/entities/Todo";
-import { TodoRepository } from "../../domain/repositories/TodoRepository";
+import { Todo } from "../../../domain/entities/Todo";
+import { TodoRepository } from "../../../domain/repositories/TodoRepository";
 
 export class GetTodoUseCase {
   constructor(private readonly todoRepository: TodoRepository) {}
