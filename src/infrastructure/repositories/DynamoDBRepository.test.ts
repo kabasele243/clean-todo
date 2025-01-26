@@ -10,7 +10,6 @@ vi.mock('@aws-sdk/lib-dynamodb');
 describe('DynamoDBTodoRepository', () => {
   let repository: DynamoDBTodoRepository;
   const mockSend = vi.fn();
-  DynamoDBTodoRepository
 
   beforeEach(() => {
     vi.clearAllMocks();
