@@ -3,7 +3,7 @@ import { CompleteTodoUseCase } from './CompleteTodoUseCase';
 import { Todo } from '../../../domain/entities/Todo';
 import { TodoRepository } from '../../../domain/repositories/TodoRepository';
 
-describe.only('CompleteTodoUseCase', () => {
+describe('CompleteTodoUseCase', () => {
   let todoRepository: TodoRepository;
   let completeTodoUseCase: CompleteTodoUseCase;
   let mockTodo: Todo;
