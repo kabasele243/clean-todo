@@ -17,8 +17,8 @@ describe('DynamoDBTodoRepository', () => {
     
     // Mock DynamoDBDocumentClient
     vi.mocked(DynamoDBDocumentClient).from.mockReturnValue({
-      send: mockSend
-    } as any);
+        send: mockSend
+      } as unknown as DynamoDBDocumentClient);
 
     repository = new DynamoDBTodoRepository();
   });
