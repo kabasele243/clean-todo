@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { CreateTodoUseCase } from './CreateTodoUseCase';
 import { Todo } from '../../../domain/entities/Todo';
 import { TodoRepository } from '../../../domain/repositories/TodoRepository';
-import { v4 as uuidv4 } from 'uuid';
 
 vi.mock('uuid', () => ({
   v4: () => 'mocked-uuid'
